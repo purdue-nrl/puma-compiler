@@ -43,7 +43,6 @@ int main(int argc, char** argv) {
    
     unsigned int out_size_x = (in_size_x - k_size_x + 2*padding)/stride + 1;
     unsigned int out_size_y =  (in_size_y - k_size_y + 2*padding)/stride + 1;
-   
 
     // Layer
     auto out = depthwise_conv(model, "", k_size_x, k_size_y, in_size_x, in_size_y, n_channels, stride, out_size_x, out_size_y);

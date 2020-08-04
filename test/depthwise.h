@@ -42,11 +42,17 @@ static std::vector< std::vector<Vector> > depthwise_conv(Model model,
     }
 
     std::vector< std::vector<Vector> > outputFlattenedImage(n_channels);
+    std::vector< std::vector<OutputVector> > outputOutFlattenedImage(n_channels);
     for(unsigned int c = 0; c < n_channels; c++) {
         // Loop across kernel positons
         outputFlattenedImage[c].resize(vectorLength);
+        outputOutFlattenedImage[c].resize(vectorLength);
         for(unsigned int imageColumn = 0; imageColumn < vectorLength;  imageColumn++) {
-            outputFlattenedImage[c][imageColumn] = kernel[c] * inputImageTiled[c][imageColumn];
+            auto out = OutputVector::create(model,"dws", 1);
+            auto compOut = kernel[c] * inputImageTiled[c][imageColumn];
+            outputFlattenedImage[c][imageColumn] = compOut;
+            out = compOut;
+            // outputFlattenedImage[c][imageColumn] = kernel[c] * inputImageTiled[c][imageColumn];
         }
     }
 
